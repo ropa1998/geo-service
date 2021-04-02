@@ -1,8 +1,6 @@
 version: "3"
 services:
   web:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    build: .
     ports:
       - "50051:50051"

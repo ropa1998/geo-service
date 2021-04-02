@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+message Country {
+  string name = 1;
+}
+
+message SubCountry {
+  string name = 1;
+}
+
+message City {
+  string name = 1;
+}
+
+message Ip {
+  string direction = 1;
+}
+
+message Empty {
+}
+
+service GeoService {
+  rpc GetAllCountries(Empty) returns (GetAllCountriesReply);
+  rpc GetSubCountries(Country) returns (GetSubCountriesReply);
+  rpc GetCities(SubCountry) returns (GetCitiesReply);
+  rpc GetLocationOfIp(Ip) returns (GetLocationOfIpReply);
+}
+
+message GetAllCountriesReply {
+  repeated Country countries = 1;
+}
+
+message GetSubCountriesReply {
+  repeated SubCountry subCountries = 1;
+}
+
+message GetCitiesReply {
+  repeated City cities = 1;
+}
+
+message GetLocationOfIpReply {
+  Country country = 1;
+}

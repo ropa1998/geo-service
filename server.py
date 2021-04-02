@@ -4,32 +4,32 @@ import grpc
 
 import geoService_pb2
 import geoService_pb2_grpc
+from services.geo_service import GeoService
 
 
 class GeoServiceServer(geoService_pb2_grpc.GeoServiceServicer):
 
+    def __init__(self):
+        self.geo_service = GeoService()
+
     def GetAllCountries(self, request, context):
         response = geoService_pb2.GetAllCountriesReply()
-        # TODO response.value
-        response.value = None
+        response.value = self.geo_service.get_countries()
         return response
 
     def GetCities(self, request, context):
         response = geoService_pb2.GetCitiesReply()
-        # TODO response.value
-        response.value = None
+        response.value = self.geo_service.get_cities(request.name)
         return response
 
     def GetSubCountries(self, request, context):
         response = geoService_pb2.GetSubCountriesReply()
-        # TODO response.value
-        response.value = None
+        response.value = self.geo_service.get_states(request.name)
         return response
 
     def GetLocationOfIp(self, request, context):
         response = geoService_pb2.GetLocationOfIpReply()
-        # TODO response.value
-        response.value = None
+        response.value = self.geo_service.get_location_from_ip(request.direction)
         return response
 
 

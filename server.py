@@ -14,22 +14,27 @@ class GeoServiceServer(geoService_pb2_grpc.GeoServiceServicer):
 
     def GetAllCountries(self, request, context):
         response = geoService_pb2.GetAllCountriesReply()
-        response.countries = self.geo_service.get_countries()
+        response.countries.extend(self.geo_service.get_countries())
         return response
 
     def GetCities(self, request, context):
         response = geoService_pb2.GetCitiesReply()
-        response.cities = self.geo_service.get_cities(request.name)
+        response.cities.extend(self.geo_service.get_cities(request.name))
         return response
 
     def GetSubCountries(self, request, context):
         response = geoService_pb2.GetSubCountriesReply()
-        response.subCountries = self.geo_service.get_states(request.name)
+        response.subCountries.extend(self.geo_service.get_states(request.name))
         return response
 
     def GetLocationOfIp(self, request, context):
         response = geoService_pb2.GetLocationOfIpReply()
-        response.country = self.geo_service.get_location_from_ip(request.direction)
+        aux = self.geo_service.get_location_from_ip(request.direction)
+        if 'country' in aux and 'state' in aux:
+            response.country = aux['country']
+            response.state = aux['state']
+        else:
+            response.error = aux
         return response
 
 

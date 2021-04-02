@@ -27,17 +27,19 @@ service GeoService {
 }
 
 message GetAllCountriesReply {
-  repeated Country countries = 1;
+  repeated string countries = 1;
 }
 
 message GetSubCountriesReply {
-  repeated SubCountry subCountries = 1;
+  repeated string subCountries = 1;
 }
 
 message GetCitiesReply {
-  repeated City cities = 1;
+  repeated string cities = 1;
 }
 
 message GetLocationOfIpReply {
-  Country country = 1;
+   optional string country = 1;
+   optional string state = 2;
+   optional string error = 3;
 }

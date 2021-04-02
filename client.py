@@ -10,10 +10,10 @@ channel = grpc.insecure_channel('localhost:50051')
 stub = geoService_pb2_grpc.GeoServiceStub(channel)
 
 # create a valid request message
-empty = geoService_pb2.Empty()
+country = geoService_pb2.Ip(direction="8.8.8.8")
 
 # make the call
-response = stub.GetAllCountries(empty)
+response = stub.GetLocationOfIp(country)
 
 # et voilà
-print(response.countries)
+print(response.country, response.state, response.error)

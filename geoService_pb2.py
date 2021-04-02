@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x10geoService.proto\"\x17\n\x07\x43ountry\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1a\n\nSubCountry\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x14\n\x04\x43ity\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x17\n\x02Ip\x12\x11\n\tdirection\x18\x01 \x01(\t\"\x07\n\x05\x45mpty\"3\n\x14GetAllCountriesReply\x12\x1b\n\tcountries\x18\x01 \x03(\x0b\x32\x08.Country\"9\n\x14GetSubCountriesReply\x12!\n\x0csubCountries\x18\x01 \x03(\x0b\x32\x0b.SubCountry\"\'\n\x0eGetCitiesReply\x12\x15\n\x06\x63ities\x18\x01 \x03(\x0b\x32\x05.City\"1\n\x14GetLocationOfIpReply\x12\x19\n\x07\x63ountry\x18\x01 \x01(\x0b\x32\x08.Country2\xcc\x01\n\nGeoService\x12\x30\n\x0fGetAllCountries\x12\x06.Empty\x1a\x15.GetAllCountriesReply\x12\x32\n\x0fGetSubCountries\x12\x08.Country\x1a\x15.GetSubCountriesReply\x12)\n\tGetCities\x12\x0b.SubCountry\x1a\x0f.GetCitiesReply\x12-\n\x0fGetLocationOfIp\x12\x03.Ip\x1a\x15.GetLocationOfIpReplyb\x06proto3'
+  serialized_pb=b'\n\x10geoService.proto\"\x17\n\x07\x43ountry\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1a\n\nSubCountry\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x14\n\x04\x43ity\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x17\n\x02Ip\x12\x11\n\tdirection\x18\x01 \x01(\t\"\x07\n\x05\x45mpty\")\n\x14GetAllCountriesReply\x12\x11\n\tcountries\x18\x01 \x03(\t\",\n\x14GetSubCountriesReply\x12\x14\n\x0csubCountries\x18\x01 \x03(\t\" \n\x0eGetCitiesReply\x12\x0e\n\x06\x63ities\x18\x01 \x03(\t\"t\n\x14GetLocationOfIpReply\x12\x14\n\x07\x63ountry\x18\x01 \x01(\tH\x00\x88\x01\x01\x12\x12\n\x05state\x18\x02 \x01(\tH\x01\x88\x01\x01\x12\x12\n\x05\x65rror\x18\x03 \x01(\tH\x02\x88\x01\x01\x42\n\n\x08_countryB\x08\n\x06_stateB\x08\n\x06_error2\xcc\x01\n\nGeoService\x12\x30\n\x0fGetAllCountries\x12\x06.Empty\x1a\x15.GetAllCountriesReply\x12\x32\n\x0fGetSubCountries\x12\x08.Country\x1a\x15.GetSubCountriesReply\x12)\n\tGetCities\x12\x0b.SubCountry\x1a\x0f.GetCitiesReply\x12-\n\x0fGetLocationOfIp\x12\x03.Ip\x1a\x15.GetLocationOfIpReplyb\x06proto3'
 )
 
 
@@ -188,7 +188,7 @@ _GETALLCOUNTRIESREPLY = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='countries', full_name='GetAllCountriesReply.countries', index=0,
-      number=1, type=11, cpp_type=10, label=3,
+      number=1, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -206,7 +206,7 @@ _GETALLCOUNTRIESREPLY = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=129,
-  serialized_end=180,
+  serialized_end=170,
 )
 
 
@@ -220,7 +220,7 @@ _GETSUBCOUNTRIESREPLY = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='subCountries', full_name='GetSubCountriesReply.subCountries', index=0,
-      number=1, type=11, cpp_type=10, label=3,
+      number=1, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -237,8 +237,8 @@ _GETSUBCOUNTRIESREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=182,
-  serialized_end=239,
+  serialized_start=172,
+  serialized_end=216,
 )
 
 
@@ -252,7 +252,7 @@ _GETCITIESREPLY = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='cities', full_name='GetCitiesReply.cities', index=0,
-      number=1, type=11, cpp_type=10, label=3,
+      number=1, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -269,8 +269,8 @@ _GETCITIESREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=241,
-  serialized_end=280,
+  serialized_start=218,
+  serialized_end=250,
 )
 
 
@@ -284,8 +284,22 @@ _GETLOCATIONOFIPREPLY = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='country', full_name='GetLocationOfIpReply.country', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='state', full_name='GetLocationOfIpReply.state', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='error', full_name='GetLocationOfIpReply.error', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -300,15 +314,35 @@ _GETLOCATIONOFIPREPLY = _descriptor.Descriptor(
   syntax='proto3',
   extension_ranges=[],
   oneofs=[
+    _descriptor.OneofDescriptor(
+      name='_country', full_name='GetLocationOfIpReply._country',
+      index=0, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_state', full_name='GetLocationOfIpReply._state',
+      index=1, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_error', full_name='GetLocationOfIpReply._error',
+      index=2, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=282,
-  serialized_end=331,
+  serialized_start=252,
+  serialized_end=368,
 )
 
-_GETALLCOUNTRIESREPLY.fields_by_name['countries'].message_type = _COUNTRY
-_GETSUBCOUNTRIESREPLY.fields_by_name['subCountries'].message_type = _SUBCOUNTRY
-_GETCITIESREPLY.fields_by_name['cities'].message_type = _CITY
-_GETLOCATIONOFIPREPLY.fields_by_name['country'].message_type = _COUNTRY
+_GETLOCATIONOFIPREPLY.oneofs_by_name['_country'].fields.append(
+  _GETLOCATIONOFIPREPLY.fields_by_name['country'])
+_GETLOCATIONOFIPREPLY.fields_by_name['country'].containing_oneof = _GETLOCATIONOFIPREPLY.oneofs_by_name['_country']
+_GETLOCATIONOFIPREPLY.oneofs_by_name['_state'].fields.append(
+  _GETLOCATIONOFIPREPLY.fields_by_name['state'])
+_GETLOCATIONOFIPREPLY.fields_by_name['state'].containing_oneof = _GETLOCATIONOFIPREPLY.oneofs_by_name['_state']
+_GETLOCATIONOFIPREPLY.oneofs_by_name['_error'].fields.append(
+  _GETLOCATIONOFIPREPLY.fields_by_name['error'])
+_GETLOCATIONOFIPREPLY.fields_by_name['error'].containing_oneof = _GETLOCATIONOFIPREPLY.oneofs_by_name['_error']
 DESCRIPTOR.message_types_by_name['Country'] = _COUNTRY
 DESCRIPTOR.message_types_by_name['SubCountry'] = _SUBCOUNTRY
 DESCRIPTOR.message_types_by_name['City'] = _CITY
@@ -392,8 +426,8 @@ _GEOSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=334,
-  serialized_end=538,
+  serialized_start=371,
+  serialized_end=575,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetAllCountries',

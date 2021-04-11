@@ -42,8 +42,11 @@ class GeoServiceServer(geoService_pb2_grpc.GeoServiceServicer):
         return response
 
 
-etcd = etcd3.client(host="etcd", port=2379)
-etcd.put('/services/geoService/' + str(uuid4()), socket.gethostbyname(socket.gethostname()))
+try:
+    etcd = etcd3.client(host="etcd", port=2379)
+    etcd.put('/services/geoService/' + str(uuid4()), socket.gethostbyname(socket.gethostname()))
+except Exception:
+    pass
 
 # create a gRPC server
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

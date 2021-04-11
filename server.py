@@ -1,10 +1,14 @@
+import socket
 from concurrent import futures
+from uuid import uuid4
 
 import grpc
 
 import geoService_pb2
 import geoService_pb2_grpc
 from services.geo_service import GeoService
+
+import etcd3
 
 
 class GeoServiceServer(geoService_pb2_grpc.GeoServiceServicer):
@@ -37,6 +41,9 @@ class GeoServiceServer(geoService_pb2_grpc.GeoServiceServicer):
             response.error = aux
         return response
 
+
+etcd = etcd3.client(host="etcd", port=2379)
+etcd.put('/services/geoService/' + str(uuid4()), socket.gethostbyname(socket.gethostname()))
 
 # create a gRPC server
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

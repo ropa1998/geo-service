@@ -4,3 +4,4 @@ setuptools~=54.2.0
 grpcio
 grpcio-tools
 requests
+etcd3

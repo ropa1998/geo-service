@@ -6,6 +6,7 @@ import grpc
 
 import geoService_pb2
 import geoService_pb2_grpc
+from etcd.etcd_manager import EtcdManager
 from services.geo_service import GeoService
 
 import etcd3
@@ -42,12 +43,6 @@ class GeoServiceServer(geoService_pb2_grpc.GeoServiceServicer):
         return response
 
 
-try:
-    etcd = etcd3.client(host="etcd", port=2379)
-    etcd.put('/services/geoService/' + str(uuid4()), socket.gethostbyname(socket.gethostname()))
-except Exception:
-    pass
-
 # create a gRPC server
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 
@@ -60,6 +55,8 @@ geoService_pb2_grpc.add_GeoServiceServicer_to_server(
 print('Starting server. Listening on port 50051.')
 server.add_insecure_port('[::]:50051')
 server.start()
+etcd_manager = EtcdManager(name='geoService')
+etcd_manager.grant_lease()
 server.wait_for_termination()
 
 # The server start() method is non-blocking.

@@ -39,7 +39,7 @@ message GetCitiesReply {
 }
 
 message GetLocationOfIpReply {
-   optional string country = 1;
-   optional string state = 2;
-   optional string error = 3;
+    string country = 1;
+    string state = 2;
+    string error = 3;
 }

@@ -15,5 +15,7 @@ class EtcdManager:
         self.scheduler.start()
 
     def __grant_lease(self):
+        # TODO make the port passed from a config file
         lease = self.client.lease(self.time_to_live)
-        self.client.put('/services/geoService/' + str(uuid4()), socket.gethostbyname(socket.gethostname()), lease=lease)
+        self.client.put('/services/geoService/' + str(uuid4()), socket.gethostbyname(socket.gethostname()) + ":50051",
+                        lease=lease)

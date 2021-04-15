@@ -38,9 +38,9 @@ class GeoService:
                     cities.append(city)
         return cities
 
-    def get_location_from_ip(self, ip_address):
+    def get_location_from_ip(self, ip_address, can_request):
         result = self.cached_ip_address.get(ip_address)
-        if result is not None:
+        if result is not None or not can_request:
             return result
         path = 'https://ipapi.co/{ip_address}/json/'.format(ip_address=ip_address)
         r = requests.get(path)

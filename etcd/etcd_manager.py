@@ -15,7 +15,8 @@ class EtcdManager:
 
     def __init__(self, time_to_live=10, etcd_host='127.0.0.1', etcd_port=2379, my_port="50051"):
         self.time_to_live = time_to_live
-        self.leader = False
+        self.is_leader = False
+        self.leader = ""
         self.my_port = my_port
         self.uuid = str(uuid4())
         self.client = etcd3.client(host=etcd_host, port=etcd_port)
@@ -26,11 +27,14 @@ class EtcdManager:
         self.scheduler.start()
 
     def is_leader(self):
-        return self.leader
+        return self.is_leader
+
+    def get_current_leader(self):
+        self.leader
 
     def watch_cb(self, event):
         if isinstance(event.events[0], etcd3.events.DeleteEvent):
-            self.leader = False
+            self.is_leader = False
 
     def _grant_lease(self):
         lease = self.client.lease(self.time_to_live)
@@ -39,16 +43,16 @@ class EtcdManager:
                         lease=lease)
 
     def my_ip_and_port(self):
-        return socket.gethostbyname(socket.gethostname()) + ":" + self.my_port
+        return "localhost" + ":" + self.my_port
 
     def _election(self):
-        if self.leader:
+        if self.is_leader:
             self.lease.refresh()
         else:
-            self.leader, self.lease = self._leader_election(self.my_port)
+            self.is_leader, self.lease = self._leader_election(self.my_ip_and_port())
 
     def _put_not_exist(self, client, key, value, lease=None):
-        status, _ = client.transaction(
+        status, value = client.transaction(
             compare=[
                 client.transactions.version(key) == 0
             ],
@@ -57,6 +61,8 @@ class EtcdManager:
             ],
             failure=[],
         )
+        if not status:
+            self.leader = client.get(LEADER_KEY)[0].decode("utf-8")
         return status
 
     def _leader_election(self, me):

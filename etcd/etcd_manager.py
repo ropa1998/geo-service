@@ -17,7 +17,7 @@ class EtcdManager:
         self.client = etcd3.client(host=etcd_host, port=etcd_port)
         self.scheduler = BackgroundScheduler()
         self.scheduler.add_job(self._grant_lease, 'interval', seconds=self.time_to_live)
-        self.scheduler.add_job(self._election(), 'interval', seconds=LEASE_TTL)
+        self.scheduler.add_job(self._election, 'interval', seconds=LEASE_TTL)
         self.scheduler.start()
 
     def is_leader(self):
@@ -30,17 +30,10 @@ class EtcdManager:
                         lease=lease)
 
     def _election(self, ip_and_port="127.0.0.1:50051"):
-        status, lease = self._leader_election(ip_and_port)
-        self.leader = status
-        try:
-            while True:
-                # do work
-                lease.refresh()
-                time.sleep(SLEEP)
-        except (Exception, KeyboardInterrupt):
-            return
-        finally:
-            lease.revoke()
+        if self.leader:
+            self.lease.refresh()
+        else:
+            self.leader, self.lease = self._leader_election(ip_and_port)
 
     def _put_not_exist(self, client, key, value, lease=None):
         status, _ = client.transaction(

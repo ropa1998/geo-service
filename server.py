@@ -1,6 +1,7 @@
 import socket
 from concurrent import futures
 from uuid import uuid4
+import yaml
 
 import grpc
 
@@ -51,11 +52,17 @@ server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 geoService_pb2_grpc.add_GeoServiceServicer_to_server(
     GeoServiceServer(), server)
 
+yamlfile = open("config.yaml", "r")
+
+yaml_info = yaml.load(yamlfile, Loader=yaml.FullLoader)
+
+port = yaml_info["port"]
+
 # listen on port 50051
-print('Starting server. Listening on port 50051.')
-server.add_insecure_port('[::]:50051')
+print('Starting server. Listening on port {port}.'.format(port=port))
+server.add_insecure_port('[::]:{port}'.format(port=port))
 server.start()
-etcd_manager = EtcdManager()
+etcd_manager = EtcdManager(my_port=port)
 server.wait_for_termination()
 
 # The server start() method is non-blocking.

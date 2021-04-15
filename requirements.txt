@@ -7,3 +7,4 @@ requests
 etcd3
 pymemcache
 apscheduler
+pyyaml

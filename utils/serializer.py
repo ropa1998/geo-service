@@ -18,7 +18,6 @@ class JsonSerde(object):
 
 class GrpcSerde(object):
     def serialize(self, key, value):
-
         if isinstance(value, str):
             return value, 1
         return base64.b64encode(bytes(value, 'utf-8')), 2

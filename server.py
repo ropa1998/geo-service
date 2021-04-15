@@ -58,8 +58,9 @@ class GeoServiceServer(geoService_pb2_grpc.GeoServiceServicer):
     def get_location_from_ip(self, request):
         response = self.geo_service.get_location_from_ip(request.direction, self.etcd_manager.is_leader)
         if response is None:
-            response = self.get_location_from_ip_from_leader(request.direction)
-        return response
+            return self.get_location_from_ip_from_leader(request.direction)
+        else:
+            return response
 
 
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

@@ -10,7 +10,7 @@ class GeoService:
     def __init__(self):
         path = 'data/cities'
         self.csv_reader = CsvReader(path)
-        self.cached_ip_address = base.Client('memcached:11211', serde=GrpcSerde())
+        self.cached_ip_address = base.Client('locahost:11211', serde=GrpcSerde())
 
     def get_countries(self):
         countries = []
@@ -40,7 +40,9 @@ class GeoService:
 
     def get_location_from_ip(self, ip_address, can_request):
         result = self.cached_ip_address.get(ip_address)
-        if result is not None or not can_request:
+        if result is not None:
+            return result
+        if not can_request:
             return result
         path = 'https://ipapi.co/{ip_address}/json/'.format(ip_address=ip_address)
         r = requests.get(path)

@@ -49,14 +49,13 @@ server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 # use the generated function `add_GeoServiceServicer_to_server`
 # to add the defined class to the server
 geoService_pb2_grpc.add_GeoServiceServicer_to_server(
-        GeoServiceServer(), server)
+    GeoServiceServer(), server)
 
 # listen on port 50051
 print('Starting server. Listening on port 50051.')
 server.add_insecure_port('[::]:50051')
 server.start()
-etcd_manager = EtcdManager(name='geoService')
-etcd_manager.grant_lease()
+etcd_manager = EtcdManager()
 server.wait_for_termination()
 
 # The server start() method is non-blocking.

@@ -33,7 +33,6 @@ class EtcdManager:
             self.leader = False
 
     def _grant_lease(self):
-        # TODO make the port passed from a config file
         lease = self.client.lease(self.time_to_live)
         self.client.put('/services/geo/' + self.uuid,
                         self.my_ip_and_port(),

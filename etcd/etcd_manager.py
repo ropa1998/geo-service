@@ -45,7 +45,7 @@ class EtcdManager:
         if self.leader:
             self.lease.refresh()
         else:
-            self.leader, self.lease = self._leader_election(self.my_port)
+            self.leader, self.lease = self._leader_election(self.my_ip_and_port())
 
     def _put_not_exist(self, client, key, value, lease=None):
         status, _ = client.transaction(

@@ -12,11 +12,16 @@ from services.geo_service import GeoService
 
 import etcd3
 
+yamlfile = open("config.yaml", "r")
+yaml_info = yaml.load(yamlfile, Loader=yaml.FullLoader)
+port = yaml_info["port"]
+
 
 class GeoServiceServer(geoService_pb2_grpc.GeoServiceServicer):
 
     def __init__(self):
         self.geo_service = GeoService()
+        self.etcd_manager = EtcdManager(my_port=port)
 
     def GetAllCountries(self, request, context):
         response = geoService_pb2.GetAllCountriesReply()
@@ -52,17 +57,10 @@ server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 geoService_pb2_grpc.add_GeoServiceServicer_to_server(
     GeoServiceServer(), server)
 
-yamlfile = open("config.yaml", "r")
-
-yaml_info = yaml.load(yamlfile, Loader=yaml.FullLoader)
-
-port = yaml_info["port"]
-
 # listen on port 50051
 print('Starting server. Listening on port {port}.'.format(port=port))
 server.add_insecure_port('[::]:{port}'.format(port=port))
 server.start()
-etcd_manager = EtcdManager(my_port=port)
 server.wait_for_termination()
 
 # The server start() method is non-blocking.

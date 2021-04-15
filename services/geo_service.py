@@ -2,7 +2,7 @@ from utils.csv_reader import CsvReader
 import requests
 from pymemcache.client import base
 
-from utils.serializer import JsonSerde
+from utils.serializer import JsonSerde, GrpcSerde
 
 
 class GeoService:
@@ -10,7 +10,7 @@ class GeoService:
     def __init__(self):
         path = 'data/cities'
         self.csv_reader = CsvReader(path)
-        self.cached_ip_address = base.Client('memcached:11211', serde=JsonSerde())
+        self.cached_ip_address = base.Client('memcached:11211', serde=GrpcSerde())
 
     def get_countries(self):
         countries = []

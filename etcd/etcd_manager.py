@@ -1,5 +1,8 @@
 import socket
+import time
 from uuid import uuid4
+from threading import Event
+
 
 import etcd3
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -15,13 +18,18 @@ class EtcdManager:
         self.time_to_live = time_to_live
         self.leader = False
         self.client = etcd3.client(host=etcd_host, port=etcd_port)
+        self.client.add_watch_callback(LEADER_KEY, self.watch_cb)
         self.scheduler = BackgroundScheduler()
         self.scheduler.add_job(self._grant_lease, 'interval', seconds=self.time_to_live)
-        self.scheduler.add_job(self._election, 'interval', seconds=LEASE_TTL)
+        self.scheduler.add_job(self._election, 'interval', seconds=LEASE_TTL - 2)
         self.scheduler.start()
 
     def is_leader(self):
         return self.leader
+
+    def watch_cb(self, event):
+        if isinstance(event.events[0], etcd3.events.DeleteEvent):
+            self.leader = False
 
     def _grant_lease(self):
         # TODO make the port passed from a config file
@@ -50,7 +58,7 @@ class EtcdManager:
     def _leader_election(self, me):
         try:
             lease = self.client.lease(LEASE_TTL)
-            status = self._put_not_exist(client, LEADER_KEY, me, lease)
+            status = self._put_not_exist(self.client, LEADER_KEY, me, lease)
         except Exception:
             status = False
             lease = None

@@ -1,8 +1,8 @@
-from utils.csv_reader import CsvReader
 import requests
 from pymemcache.client import base
 
-from utils.serializer import JsonSerde, GrpcSerde
+from utils.csv_reader import CsvReader
+from utils.serializer import JsonSerde
 
 
 class GeoService:
@@ -10,7 +10,7 @@ class GeoService:
     def __init__(self):
         path = 'data/cities'
         self.csv_reader = CsvReader(path)
-        self.cached_ip_address = base.Client('locahost:11211', serde=GrpcSerde())
+        self.cached_ip_address = base.Client('localhost:11211', serde=JsonSerde())
 
     def get_countries(self):
         countries = []

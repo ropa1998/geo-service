@@ -10,7 +10,7 @@ class GeoService:
     def __init__(self):
         path = 'data/cities'
         self.csv_reader = CsvReader(path)
-        self.cached_ip_address = base.Client('localhost:11211', serde=JsonSerde())
+        self.cached_ip_address = base.Client('my-memcached:11211', serde=JsonSerde())
 
     def get_countries(self):
         countries = []

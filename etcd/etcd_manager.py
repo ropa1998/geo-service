@@ -13,12 +13,13 @@ SLEEP = 1
 
 class EtcdManager:
 
-    def __init__(self, time_to_live=10, etcd_host='127.0.0.1', etcd_port=2379, my_port="50051"):
+    def __init__(self, time_to_live=10, etcd_host='etcd-headless', etcd_port=2379, my_port="50051"):
         self.time_to_live = time_to_live
         self.is_leader = False
         self.leader = ""
         self.my_port = my_port
         self.uuid = str(uuid4())
+        print(etcd_host, etcd_port)
         self.client = etcd3.client(host=etcd_host, port=etcd_port)
         self.client.add_watch_callback(LEADER_KEY, self.watch_cb)
         self.scheduler = BackgroundScheduler()
